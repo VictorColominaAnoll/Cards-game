@@ -23,9 +23,14 @@ public class GameJPA {
 
     public GameJPA(String name, PlayerJPA player) {
         this.name = name;
-        this.players = new ArrayList<>(){{
+        this.players = new ArrayList<>() {{
             add(player);
         }};
+    }
+
+    public void join(PlayerJPA playerJPA) {
+        if (!players.contains(playerJPA))
+            this.players.add(playerJPA);
     }
 
     public String getId() {
@@ -43,4 +48,5 @@ public class GameJPA {
                 ", players=" + players +
                 '}';
     }
+
 }

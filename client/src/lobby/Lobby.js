@@ -1,12 +1,21 @@
-import { create } from "game/Repository";
-import { useState } from "react";
+import { create, findAll, joinGame } from "game/Repository";
+import { useState, useEffect } from "react";
 import { Container, Row, Col, Button, FormControl } from "react-bootstrap";
 
 export function Lobby() {
 
+    const [games, setGames] = useState([])
+
+    const findGames = async () => {
+        setGames(await findAll());
+    }
+
+    useEffect(() => findGames(), []);
+
     const [name, setName] = useState("");
     const createGame = async () => {
-        await create(name)
+        await create(name);
+        findGames();
     }
 
     return (
@@ -28,10 +37,21 @@ export function Lobby() {
                 </Col>
                 <Col md={4}>
                     <h1>Unete a un juego</h1>
-
+                    <JoinGames games={games} />
                 </Col>
                 <Col />
             </Row>
         </Container>
     )
+}
+
+function JoinGames({ games }) {
+
+    console.log(games)
+
+    const join = async (id) => {
+        await joinGame(id);
+    }
+
+    return games.map(game => <li key={game.id} onClick={() => join(game.id)}>{game.id}</li>)
 }
