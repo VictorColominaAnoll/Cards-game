@@ -1,13 +1,19 @@
 import { Container, Row, Col, FormControl, Button } from "react-bootstrap";
 import { useState } from 'react';
 import { create } from "player/Repository";
+import { useNavigate, } from "react-router-dom";
 
 export function Home() {
+    let navigate = useNavigate();
 
     const [username, setUsername] = useState("");
 
-    const createPlayer = () => {
-        create(username)
+    const createPlayer = async () => {
+        await create(username);
+
+        localStorage.setItem("player", username); 
+
+        navigate("/lobby")
     }
 
     return (

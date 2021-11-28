@@ -17,6 +17,5 @@ public class PlayerController {
     @ResponseStatus(HttpStatus.CREATED)
     private void createPlayer(@RequestParam String name){
         playerJPARepository.save(new PlayerJPA(name));
-        System.out.println(playerJPARepository.findAll());
     }
 }

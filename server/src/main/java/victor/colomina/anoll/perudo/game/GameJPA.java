@@ -1,5 +1,6 @@
 package victor.colomina.anoll.perudo.game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import victor.colomina.anoll.perudo.player.*;
 public class GameJPA {
 
     @Id
-    private String id;
+    private String name;
 
     @ManyToMany
     private List<PlayerJPA> players;
@@ -20,11 +21,26 @@ public class GameJPA {
     public GameJPA() {
     }
 
+    public GameJPA(String name, PlayerJPA player) {
+        this.name = name;
+        this.players = new ArrayList<>(){{
+            add(player);
+        }};
+    }
+
     public String getId() {
-        return id;
+        return name;
     }
 
     public List<PlayerJPA> getPlayers() {
         return players;
+    }
+
+    @Override
+    public String toString() {
+        return "GameJPA{" +
+                "name='" + name + '\'' +
+                ", players=" + players +
+                '}';
     }
 }
