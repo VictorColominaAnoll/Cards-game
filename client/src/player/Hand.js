@@ -23,7 +23,7 @@ export function Hand({ dices }) {
             case 5:
                 return (<Dice6 />)
             default:
-                break;
+                return (<></>)
         }
     })
 
