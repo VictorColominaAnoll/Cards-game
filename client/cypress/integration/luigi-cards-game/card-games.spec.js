@@ -1,5 +1,20 @@
 describe("Let's play the card game", () => {
+
     it("should visit the game address", () => {
+        cy.intercept('GET', 'http://localhost:8080/api/cards', {
+            statusCode: 200,
+            body: [
+                {
+                    id: 1,
+                    content: "❤️"
+                },
+                {
+                    id: 2,
+                    content: "❤️"
+                }
+            ]
+        }).as("getCards")
+
         cy.visit("/cards");
         cy.findByText("Card game");
     })
@@ -8,7 +23,7 @@ describe("Let's play the card game", () => {
         const card = cy.findByTestId("card-1");
         card.click()
         card.should('have.class', 'selected')
-    
+
         card.click()
         card.should('not.have.class', 'selected')
     })
@@ -20,7 +35,6 @@ describe("Let's play the card game", () => {
         card1.should('not.be.visible')
         card2.should('not.be.visible')
     })
-
 })
 
 function selectCard(testId) {
