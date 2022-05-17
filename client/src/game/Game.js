@@ -1,34 +1,16 @@
 import { Col, Container, Row, Button, Form, FormControl, InputGroup } from 'react-bootstrap';
 import { Hand } from 'player/Hand';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function Game() {
 
-  const randomNumber = () => {
-    const MAX_NUM_NOT_INCLUDED = 6;
-    return Math.floor(Math.random() * MAX_NUM_NOT_INCLUDED);
-  }
-
-  const [dices, setDices] = useState([
-    randomNumber(),
-    randomNumber(),
-    randomNumber(),
-    randomNumber(),
-    randomNumber(),
-  ])
-
+  const [dices, setDices] = useState([])
   const [quantity, setQuantity] = useState(1)
 
-  const generate = () => {
-    const result = []
+  useEffect(() => {
+    
+  }, [])
 
-    for (let i = 0; i < 5; i++) {
-      result.push(randomNumber())
-    }
-
-    setDices(result)
-
-  }
 
   const handleOnChangeQuantity = (value) => {
     const onlyNumericValues = value.replace(/\D/g, '');

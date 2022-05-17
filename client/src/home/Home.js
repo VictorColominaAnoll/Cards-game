@@ -4,7 +4,7 @@ import { create } from "player/Repository";
 import { useNavigate, } from "react-router-dom";
 
 export function Home() {
-    let navigate = useNavigate();
+    let redirect = useNavigate();
 
     const [username, setUsername] = useState("");
 
@@ -13,7 +13,7 @@ export function Home() {
 
         localStorage.setItem("player", username); 
 
-        navigate("/lobby")
+        redirect("/lobby")
     }
 
     return (
@@ -23,7 +23,7 @@ export function Home() {
                 <Col md={4}>
                     <h1>Introduce tu nombre de jugador</h1>
                     <FormControl
-                        placeholder="Ejemplo: Willyrex"
+                        placeholder="Ejemplo: Monxeta"
                         value={username}
                         onChange={(event) => setUsername(event.target.value)}
                         ria-label="Cantidad"
