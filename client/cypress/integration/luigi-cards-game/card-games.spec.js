@@ -1,19 +1,16 @@
 describe("Let's play the card game", () => {
 
     it("should visit the game address", () => {
-        cy.intercept('GET', 'http://localhost:8080/api/cards', {
-            statusCode: 200,
-            body: [
-                {
-                    id: 1,
-                    content: "❤️"
-                },
-                {
-                    id: 2,
-                    content: "❤️"
-                }
-            ]
-        }).as("getCards")
+        mockCards([
+            {
+                id: 1,
+                content: "❤️"
+            },
+            {
+                id: 2,
+                content: "❤️"
+            }
+        ]);
 
         cy.visit("/cards");
         cy.findByText("Card game");
@@ -43,3 +40,43 @@ function selectCard(testId) {
     card.click();
     return card;
 }
+
+function mockCards(cards) {
+    cy.intercept('GET', 'http://localhost:8080/api/cards', {
+        statusCode: 200,
+        body: cards
+    }).as("getCards");
+}
+
+describe("Defining the moves the player can do", () => {
+    it("should match equal cards that are near", () => {
+        mockCards([
+            {
+                id: 1,
+                content: "❤️"
+            },
+            {
+                id: 2,
+                content: "⭐"
+            },
+            {
+                id: 3,
+                content: "⭐"
+            },
+            {
+                id: 4,
+                content: "❤️"
+            },
+            {
+                id: 5,
+                content: "🐐"
+            },
+            {
+                id: 6,
+                content: "🐐"
+            },
+        ]);
+
+        cy.visit("/cards");
+    })
+})
