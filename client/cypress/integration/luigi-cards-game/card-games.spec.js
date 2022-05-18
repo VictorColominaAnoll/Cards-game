@@ -301,7 +301,7 @@ describe("Defining the moves the player can do", () => {
         cy.contains('🐐').should('exist')
     })
 
-    it.only("should be able to select two cards with the same content diagonally - topLeft to bottomRight", () => {
+    it("should be able to select two cards with the same content diagonally - topLeft to bottomRight", () => {
         mockCards([
             {
                 id: 1,
