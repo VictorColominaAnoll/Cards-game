@@ -35,11 +35,26 @@ export function CardGame() {
 
     const areCardsNextToEachOther = (id) => {
         const selectedCards = getSelectedCards(id);
-        const distanceBetweenSelectedCards = selectedCards[1].id - selectedCards[0].id;
+        const distanceBetweenSelectedCards = selectedCards[1].position - selectedCards[0].position;
         const areCardsNextToEachOther = distanceBetweenSelectedCards === 1;
         const areCardsInTopOfEachOther = distanceBetweenSelectedCards === 5;
-        
-        return areCardsNextToEachOther || areCardsInTopOfEachOther
+
+        return areCardsNextToEachOther || areCardsInTopOfEachOther;
+    }
+
+    const orderCards = (disorderedCards) => {
+        let position = 0;
+
+        return disorderedCards.map(card => {
+            if (card.show) {
+                position++
+                return {
+                    ...card,
+                    position
+                }
+            }
+            return card;
+        })
     }
 
     const checkSelected = (id) => {
@@ -47,16 +62,10 @@ export function CardGame() {
             setSelected([id]);
         else {
             if (isValidMovement(id)) {
-                setCards(cards.map(card => isTheCardSelected(card, id) ?
-                    {
-                        ...card,
-                        show: false
-                    }
-                    :
-                    card
-                ))
-            }
+                const disorderedCards = cards.map(card => isTheCardSelected(card, id) ? { ...card, show: false, position: undefined } : card);
 
+                setCards(orderCards(disorderedCards))
+            }
             setSelected([]);
         }
     }
