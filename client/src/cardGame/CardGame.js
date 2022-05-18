@@ -37,9 +37,11 @@ export function CardGame() {
         const selectedCards = getSelectedCards(id);
         const distanceBetweenSelectedCards = selectedCards[1].position - selectedCards[0].position;
         const areCardsNextToEachOther = distanceBetweenSelectedCards === 1;
+        const areCardsDiagonallyBottomLeftToTopRight = distanceBetweenSelectedCards === 4;
         const areCardsInTopOfEachOther = distanceBetweenSelectedCards === 5;
+        const areCardsDiagonallyTopLeftToBottomRight = distanceBetweenSelectedCards === 6;
 
-        return areCardsNextToEachOther || areCardsInTopOfEachOther;
+        return areCardsNextToEachOther || areCardsInTopOfEachOther || areCardsDiagonallyBottomLeftToTopRight || areCardsDiagonallyTopLeftToBottomRight;
     }
 
     const orderCards = (disorderedCards) => {

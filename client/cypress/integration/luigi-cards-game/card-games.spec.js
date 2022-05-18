@@ -249,4 +249,118 @@ describe("Defining the moves the player can do", () => {
         cy.contains('❤️').should('not.exist')
         cy.contains('⭐').should('not.exist')
     })
+
+    it("should be able to select two cards with the same content diagonally - topRight to bottomLeft", () => {
+        mockCards([
+            {
+                id: 1,
+                content: "❤️",
+                show: true,
+                position: 1
+            },
+            {
+                id: 2,
+                content: "⭐",
+                show: true,
+                position: 2
+            },
+            {
+                id: 3,
+                content: "❤️",
+                show: true,
+                position: 3
+            },
+            {
+                id: 4,
+                content: "🐐",
+                show: true,
+                position: 4
+            },
+            {
+                id: 5,
+                content: "🐐",
+                show: true,
+                position: 5
+            },
+            {
+                id: 6,
+                content: "⭐",
+                show: true,
+                position: 6
+            },
+            
+        ]);
+
+        cy.visit("/cards");
+
+        selectCard("card-2", '⭐');
+        selectCard("card-6", '⭐');
+
+        cy.contains('⭐').should('not.exist')
+        cy.contains('❤️').should('exist')
+        cy.contains('🐐').should('exist')
+    })
+
+    it.only("should be able to select two cards with the same content diagonally - topLeft to bottomRight", () => {
+        mockCards([
+            {
+                id: 1,
+                content: "❤️",
+                show: true,
+                position: 1
+            },
+            {
+                id: 2,
+                content: "🐐",
+                show: true,
+                position: 2
+            },
+            {
+                id: 3,
+                content: "⭐",
+                show: true,
+                position: 3
+            },
+            {
+                id: 4,
+                content: "🐐",
+                show: true,
+                position: 4
+            },
+            {
+                id: 5,
+                content: "🐐",
+                show: true,
+                position: 5
+            },
+            {
+                id: 6,
+                content: "⭐",
+                show: true,
+                position: 6
+            },
+            {
+                id: 7,
+                content: "❤️",
+                show: true,
+                position: 7
+            },
+            {
+                id: 8,
+                content: "🐐",
+                show: true,
+                position: 8
+            },
+            
+        ]);
+
+        cy.visit("/cards");
+
+        selectCard("card-1", '❤️');
+        selectCard("card-7", '❤️');
+
+        cy.contains('❤️').should('not.exist')
+        cy.contains('⭐').should('exist')
+        cy.contains('🐐').should('exist')
+    })
 });
