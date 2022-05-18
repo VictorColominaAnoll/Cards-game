@@ -50,7 +50,7 @@ function mockCards(cards) {
 }
 
 describe("Defining the moves the player can do", () => {
-    it("should match equal cards that are near", () => {
+    it("should match cards with the same content", () => {
         mockCards([
             {
                 id: 1,
@@ -92,5 +92,28 @@ describe("Defining the moves the player can do", () => {
         cy.contains('⭐').should('not.exist')
         cy.contains('❤️').should('exist')
         cy.contains('🐐').should('exist')
+    })
+
+    it("should NOT match cards with different content", () => {
+        mockCards([
+            {
+                id: 1,
+                content: "❤️",
+                show: true
+            },
+            {
+                id: 2,
+                content: "⭐",
+                show: true
+            }
+        ]);
+
+        cy.visit("/cards");
+
+        selectCard("card-1", '❤️');
+        selectCard("card-2", '⭐');
+
+        cy.contains('⭐').should('exist')
+        cy.contains('❤️').should('exist')
     })
 });

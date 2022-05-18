@@ -26,12 +26,16 @@ export function CardGame() {
     const isFirstCardSelected = () => selected.length === 0;
     const isTheSecondCardTheCardPreviouslySelected = (id) => selected[0] !== id
     const isTheCardSelected = (card, id) => card.id === id || card.id === selected[0];
+    const areEquals = (id) => {
+        const contents = cards.filter(card => isTheCardSelected(card, id))
+        return contents[0].content === contents[1].content;
+    }
 
     const checkSelected = (id) => {
         if (isFirstCardSelected())
             setSelected([id]);
         else {
-            if (isTheSecondCardTheCardPreviouslySelected(id)) {
+            if (isTheSecondCardTheCardPreviouslySelected(id) && areEquals(id)) {
                 setCards(cards.map(card => isTheCardSelected(card, id) ?
                     {
                         ...card,
@@ -40,8 +44,6 @@ export function CardGame() {
                     :
                     card
                 ))
-
-
             }
 
             setSelected([]);
