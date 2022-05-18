@@ -35,7 +35,11 @@ export function CardGame() {
 
     const areCardsNextToEachOther = (id) => {
         const selectedCards = getSelectedCards(id);
-        return (selectedCards[1].id - selectedCards[0].id) === 1
+        const distanceBetweenSelectedCards = selectedCards[1].id - selectedCards[0].id;
+        const areCardsNextToEachOther = distanceBetweenSelectedCards === 1;
+        const areCardsInTopOfEachOther = distanceBetweenSelectedCards === 5;
+        
+        return areCardsNextToEachOther || areCardsInTopOfEachOther
     }
 
     const checkSelected = (id) => {

@@ -117,7 +117,7 @@ describe("Defining the moves the player can do", () => {
         cy.contains('❤️').should('exist')
     })
 
-    it("should NOT be able to select to cards with same cards that aren't next to each other", () => {
+    it("should NOT be able to select to cards with same content that aren't next to each other", () => {
         mockCards([
             {
                 id: 1,
@@ -143,5 +143,49 @@ describe("Defining the moves the player can do", () => {
 
         cy.contains('⭐').should('exist')
         cy.contains('❤️').should('exist')
+    })
+
+    it("should be able to select to cards with same content vertically", () => {
+        mockCards([
+            {
+                id: 1,
+                content: "❤️",
+                show: true
+            },
+            {
+                id: 2,
+                content: "⭐",
+                show: true
+            },
+            {
+                id: 3,
+                content: "⭐",
+                show: true
+            },
+            {
+                id: 4,
+                content: "🐐",
+                show: true
+            },
+            {
+                id: 5,
+                content: "🐐",
+                show: true
+            },
+            {
+                id: 6,
+                content: "❤️",
+                show: true
+            },
+        ]);
+
+        cy.visit("/cards");
+
+        selectCard("card-1", '❤️');
+        selectCard("card-6", '❤️');
+
+        cy.contains('❤️').should('not.exist')
+        cy.contains('⭐').should('exist')
+        cy.contains('🐐').should('exist')
     })
 });
