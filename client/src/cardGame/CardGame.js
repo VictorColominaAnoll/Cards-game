@@ -23,19 +23,26 @@ export function CardGame() {
     const [isActive, setIsActive] = useState(false);
     const [selected, setSelected] = useState([])
 
+    const isValidMovement = (id) => isTheSecondCardTheCardPreviouslySelected(id) && areTheContentCardsEquals(id) && areCardsNextToEachOther(id);
     const isFirstCardSelected = () => selected.length === 0;
     const isTheSecondCardTheCardPreviouslySelected = (id) => selected[0] !== id
     const isTheCardSelected = (card, id) => card.id === id || card.id === selected[0];
-    const areEquals = (id) => {
-        const contents = cards.filter(card => isTheCardSelected(card, id))
-        return contents[0].content === contents[1].content;
+    const getSelectedCards = (id) => cards.filter(card => isTheCardSelected(card, id));
+    const areTheContentCardsEquals = (id) => {
+        const selectedCards = getSelectedCards(id);
+        return selectedCards[0].content === selectedCards[1].content;
+    }
+
+    const areCardsNextToEachOther = (id) => {
+        const selectedCards = getSelectedCards(id);
+        return (selectedCards[1].id - selectedCards[0].id) === 1
     }
 
     const checkSelected = (id) => {
         if (isFirstCardSelected())
             setSelected([id]);
         else {
-            if (isTheSecondCardTheCardPreviouslySelected(id) && areEquals(id)) {
+            if (isValidMovement(id)) {
                 setCards(cards.map(card => isTheCardSelected(card, id) ?
                     {
                         ...card,
