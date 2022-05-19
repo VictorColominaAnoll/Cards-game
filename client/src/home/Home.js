@@ -19,6 +19,15 @@ export function Home() {
     return (
         <Container fluid>
             <Row>
+                <Col></Col>
+                <Col md={4}>
+                    <a href="/cards"><h1>Click here para jugar al Juego de cartas</h1></a>
+                </Col>
+                <Col></Col>
+            </Row>
+            <br></br>
+            <br></br>
+            <Row>
                 <Col />
                 <Col md={4}>
                     <h1>Introduce tu nombre de jugador</h1>
