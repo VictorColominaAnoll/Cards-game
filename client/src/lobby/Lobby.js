@@ -1,8 +1,11 @@
 import { create, findAll, joinGame } from "game/Repository";
 import { useState, useEffect } from "react";
 import { Container, Row, Col, Button, FormControl } from "react-bootstrap";
+import { useNavigate } from "react-router";
 
 export function Lobby() {
+
+    const navigate = useNavigate();
 
     const [games, setGames] = useState([])
 
@@ -15,7 +18,8 @@ export function Lobby() {
     const [name, setName] = useState("");
     const createGame = async () => {
         await create(name);
-        findGames();
+        localStorage.setItem("game", name)
+        navigate("/game")
     }
 
     return (
@@ -47,11 +51,13 @@ export function Lobby() {
 
 function JoinGames({ games }) {
 
-    console.log(games)
+    const navigate = useNavigate()
 
     const join = async (id) => {
         await joinGame(id);
+        localStorage.setItem("game", id)
+        navigate("/game")
     }
 
-    return games.map(game => <li key={game.id} onClick={() => join(game.id)}>{game.id}</li>)
+    return games.map(game => <li style={{ cursor: "pointer" }} key={game.id} onClick={() => join(game.id)}>{game.id}</li>)
 }

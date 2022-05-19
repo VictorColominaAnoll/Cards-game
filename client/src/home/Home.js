@@ -4,7 +4,7 @@ import { create } from "player/Repository";
 import { useNavigate, } from "react-router-dom";
 
 export function Home() {
-    let navigate = useNavigate();
+    let redirect = useNavigate();
 
     const [username, setUsername] = useState("");
 
@@ -13,17 +13,26 @@ export function Home() {
 
         localStorage.setItem("player", username); 
 
-        navigate("/lobby")
+        redirect("/lobby")
     }
 
     return (
         <Container fluid>
             <Row>
+                <Col></Col>
+                <Col md={4}>
+                    <a href="/cards"><h1>Click here para jugar al Juego de cartas</h1></a>
+                </Col>
+                <Col></Col>
+            </Row>
+            <br></br>
+            <br></br>
+            <Row>
                 <Col />
                 <Col md={4}>
                     <h1>Introduce tu nombre de jugador</h1>
                     <FormControl
-                        placeholder="Ejemplo: Willyrex"
+                        placeholder="Ejemplo: Monxeta"
                         value={username}
                         onChange={(event) => setUsername(event.target.value)}
                         ria-label="Cantidad"
