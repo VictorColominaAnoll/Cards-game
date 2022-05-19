@@ -20,7 +20,8 @@ function App() {
     <>
       <Menu />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<CardGame />} />
+        {/* <Route path="/" element={<Home />} /> */}
         <Route path="/lobby" element={<Lobby />} />
         <Route path="/game" element={<Game />} />
         <Route path="/cards" element={<CardGame />} />
