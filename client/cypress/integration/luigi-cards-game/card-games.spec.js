@@ -1,6 +1,7 @@
 describe("Let's play the card game", () => {
 
     it("should visit the game address", () => {
+        mockCards([])
         cy.visit("/cards");
         cy.findByText("Card game");
     })
@@ -21,15 +22,35 @@ describe("Let's play the card game", () => {
             }
         ]);
 
+        cy.visit("/cards");
+
         const card = cy.findByTestId("card-1");
         card.click()
         card.should('have.class', 'selected')
+        card.should('have.css', 'background-color', "rgb(85, 201, 129)")
 
         card.click()
         card.should('not.have.class', 'selected')
     })
 
     it("should be able to match two equal cards that are close each other", () => {
+        mockCards([
+            {
+                id: 1,
+                content: "❤️",
+                show: true,
+                position: 1
+            },
+            {
+                id: 2,
+                content: "❤️",
+                show: true,
+                position: 2
+            }
+        ]);
+
+        cy.visit("/cards");
+        
         selectCard("card-1", '❤️');
         selectCard("card-2", '❤️');
 
@@ -288,7 +309,7 @@ describe("Defining the moves the player can do", () => {
                 show: true,
                 position: 6
             },
-            
+
         ]);
 
         cy.visit("/cards");
@@ -351,7 +372,7 @@ describe("Defining the moves the player can do", () => {
                 show: true,
                 position: 8
             },
-            
+
         ]);
 
         cy.visit("/cards");

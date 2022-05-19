@@ -9,9 +9,11 @@ export function CardGame() {
         width: "18%",
         textAlign: "center",
         padding: "25px",
-        border: "1px solid",
+        border: "2px solid",
+        borderRadius: "3%",
         fontSize: "40px",
-        margin: "0 5px"
+        margin: "0 5px",
+        cursor: "pointer"
     }
 
     const [cards, setCards] = useState([]);
@@ -72,6 +74,13 @@ export function CardGame() {
         }
     }
 
+    const isThisCardActive = (id) => {
+        if (selected.length === 0)
+            return false
+
+        return isActive && selected[0] === id
+    }
+
     return (
         <>
             <Container>
@@ -79,11 +88,16 @@ export function CardGame() {
                 <Row type="flex" gutter={[8, 8]}>
                     {
                         cards.map(card => card.show ? (
-                            <Col style={colStyle}>
-                                <span data-testid={"card-" + card.id} className={isActive ? "cards selected" : "cards"} onClick={() => {
+                            <Col
+                                data-testid={"card-" + card.id}
+                                className={isThisCardActive(card.id) ? "cards selected" : "cards"}
+                                style={colStyle}
+                                onClick={() => {
                                     setIsActive(!isActive);
                                     checkSelected(card.id);
-                                }}>{card.content}</span>
+                                }}
+                            >
+                                <span>{card.content}</span>
                             </Col>
                         ) : (<></>)
                         )
