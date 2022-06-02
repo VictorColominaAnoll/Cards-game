@@ -50,7 +50,7 @@ describe("Let's play the card game", () => {
         ]);
 
         cy.visit("/cards");
-        
+
         selectCard("card-1", '❤️');
         selectCard("card-2", '❤️');
 
@@ -385,3 +385,76 @@ describe("Defining the moves the player can do", () => {
         cy.contains('🐐').should('exist')
     })
 });
+
+describe("End game ;)", () => {
+    it("should show a congrats message to the user after match cards", () => {
+        mockCards([
+            {
+                id: 1,
+                content: "❤️",
+                show: true,
+                position: 1
+            },
+            {
+                id: 2,
+                content: "❤️",
+                show: true,
+                position: 2
+            }
+        ]);
+
+        cy.visit("/cards");
+
+        selectCard("card-1", '❤️');
+        selectCard("card-2", '❤️');
+
+        cy.contains('❤️').should('not.exist')
+        cy.findByText("Congratulations!!");
+    })
+
+    it("should show a play again button", () => {
+        mockCards([
+            {
+                id: 1,
+                content: "❤️",
+                show: true,
+                position: 1
+            },
+            {
+                id: 2,
+                content: "❤️",
+                show: true,
+                position: 2
+            }
+        ]);
+
+        cy.visit("/cards");
+
+        selectCard("card-1", '❤️');
+        selectCard("card-2", '❤️');
+
+        cy.contains('❤️').should('not.exist')
+
+        mockCards([
+            {
+                id: 1,
+                content: "⭐",
+                show: true,
+                position: 1
+            },
+            {
+                id: 2,
+                content: "⭐",
+                show: true,
+                position: 2
+            }
+        ]);
+
+        cy.findByText("Play again").click()
+        
+        cy.contains('Congratulations!!').should('not.exist')
+        cy.contains('Play again').should('not.exist')
+
+        selectCard("card-1", '⭐');
+    })
+})
