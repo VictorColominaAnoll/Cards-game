@@ -90,7 +90,7 @@ export function CardGame() {
 
             const areCurrentCardAndNextOneEqual = cards[i].content === cards[i + 1].content;
 
-            if (areCurrentCardAndNextOneEqual || areVerticalCardsEqual(cards, i))
+            if (areCurrentCardAndNextOneEqual || areVerticalMovementsLeft(cards, i) || areDiagonalMovementsLeft(cards, i))
                 isGameOver = false;
 
         }
@@ -100,7 +100,18 @@ export function CardGame() {
 
     }
 
-    function areVerticalCardsEqual(cards, i) {
+    function areDiagonalMovementsLeft(cards, i) {
+
+        let leftDiagonal = false
+
+        try {
+            leftDiagonal = cards[i].content === cards[i + 4].content;
+        } catch (error) { }
+
+        return leftDiagonal;
+    }
+
+    function areVerticalMovementsLeft(cards, i) {
         try {
             return cards[i].content === cards[i + 5].content;
         } catch (error) {

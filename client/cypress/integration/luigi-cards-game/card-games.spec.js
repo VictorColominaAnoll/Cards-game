@@ -509,7 +509,7 @@ describe("You lose :_(", () => {
 
     })
 
-    it.only("should show a sad message to the user when no vertical movements available", () => {
+    it("should show a sad message to the user when no vertical movements available", () => {
         mockCards([
             {
                 id: 1,
@@ -568,6 +568,140 @@ describe("You lose :_(", () => {
         selectCard("card-3", '❤️');
         selectCard("card-8", '❤️');
 
+
+        cy.contains('Oh no... You lose!!').should('exist')
+        cy.findByText("Play again").click()
+    })
+
+    it("should show a sad message to the user when no left diagonal movements available", () => {
+        mockCards([
+            {
+                id: 1,
+                content: "⭐",
+                show: true,
+                position: 1
+            },
+            {
+                id: 2,
+                content: "⭐",
+                show: true,
+                position: 2
+            },
+            {
+                id: 3,
+                content: "⭐",
+                show: true,
+                position: 3
+            },
+            {
+                id: 4,
+                content: "❤️",
+                show: true,
+                position: 4
+            },
+            {
+                id: 5,
+                content: "🐐",
+                show: true,
+                position: 5
+            },
+            {
+                id: 6,
+                content: "⭐",
+                show: true,
+                position: 6
+            },
+            {
+                id: 7,
+                content: "🐐",
+                show: true,
+                position: 7
+            },
+            {
+                id: 8,
+                content: "❤️",
+                show: true,
+                position: 8
+            },
+        ]);
+        cy.visit("/cards");
+
+        selectCard("card-1", '⭐');
+        selectCard("card-2", '⭐');
+
+        selectCard("card-4", '❤️');
+        selectCard("card-8", '❤️');
+
+
+        cy.contains('Oh no... You lose!!').should('exist')
+        cy.findByText("Play again").click()
+    })
+
+    it.only("should show a sad message to the user when no right diagonal movements available", () => {
+        mockCards([
+            {
+                id: 1,
+                content: "⭐",
+                show: true,
+                position: 1
+            },
+            {
+                id: 2,
+                content: "⭐",
+                show: true,
+                position: 2
+            },
+            {
+                id: 3,
+                content: "⭐",
+                show: true,
+                position: 3
+            },
+            {
+                id: 4,
+                content: "🐐",
+                show: true,
+                position: 4
+            },
+            {
+                id: 5,
+                content: "❤️",
+                show: true,
+                position: 5
+            },
+            {
+                id: 6,
+                content: "🐐",
+                show: true,
+                position: 6
+            },
+            {
+                id: 7,
+                content: "⭐",
+                show: true,
+                position: 7
+            },
+            {
+                id: 8,
+                content: "❤️",
+                show: true,
+                position: 8
+            },
+            {
+                id: 9,
+                content: "⭐",
+                show: true,
+                position: 9
+            },
+
+        ]);
+        cy.visit("/cards");
+
+        selectCard("card-1", '⭐');
+        selectCard("card-2", '⭐');
+
+        selectCard("card-3", '⭐');
+        selectCard("card-9", '⭐');
 
         cy.contains('Oh no... You lose!!').should('exist')
         cy.findByText("Play again").click()
