@@ -17,6 +17,7 @@ export function CardGame() {
     }
 
     const [isGameEnd, setGameEnd] = useState(false)
+    const [isGameLost, setGameLost] = useState(false)
 
     const [cards, setCards] = useState([]);
 
@@ -71,10 +72,32 @@ export function CardGame() {
                 const disorderedCards = cards.map(card => isTheCardSelected(card, id) ? { ...card, show: false, position: undefined } : card);
                 const newCards = orderCards(disorderedCards);
                 setCards(newCards)
-                setGameEnd(checkEndGame(newCards));
+                if (checkEndGame(newCards))
+                    setGameEnd(true);
+                else
+                    setGameLost(checkGameIsLost(newCards))
             }
             setSelected([]);
         }
+    }
+
+    const checkGameIsLost = (cardsWithUndefinedPositions) => {
+
+        const cards = cardsWithUndefinedPositions.filter(card => { if (card.position !== undefined) return card })
+
+        let isGameOver = true;
+        for (let i = 0; i < cards.length - 1; i++) {
+
+            const areCurrentCardAndNextOneEqual = cards[i].content === cards[i + 1].content;
+
+            if (areCurrentCardAndNextOneEqual)
+                isGameOver = false;
+
+        }
+
+        console.log(isGameOver)
+
+        return isGameOver
     }
 
     const isThisCardActive = (id) => {
@@ -105,27 +128,33 @@ export function CardGame() {
                     isGameEnd ? (
                         <EndGameMessage />
                     ) : (
-                        <Row type="flex" gutter={[8, 8]}>
-                            {
-                                cards.map(card => card.show ? (
-                                    <Col
-                                        data-testid={"card-" + card.id}
-                                        className={isThisCardActive(card.id) ? "cards selected" : "cards"}
-                                        style={colStyle}
-                                        onClick={() => {
-                                            setIsActive(!isActive);
-                                            checkSelected(card.id);
-                                        }}
-                                    >
-                                        <span>{card.content}</span>
-                                    </Col>
-                                ) : (<></>)
+                        <>
+                            {isGameLost ? (<LostGameMessage />)
+                                : (
+                                    <Row type="flex" gutter={[8, 8]}>
+                                        {
+                                            cards.map(card => card.show ? (
+                                                <Col
+                                                    data-testid={"card-" + card.id}
+                                                    className={isThisCardActive(card.id) ? "cards selected" : "cards"}
+                                                    style={colStyle}
+                                                    onClick={() => {
+                                                        setIsActive(!isActive);
+                                                        checkSelected(card.id);
+                                                    }}
+                                                >
+                                                    <span>{card.content}</span>
+                                                </Col>
+                                            ) : (<></>)
+                                            )
+                                        }
+                                    </Row>
                                 )
                             }
-                        </Row>
+
+
+                        </>
                     )
-
-
                 }
 
             </Container>
@@ -133,14 +162,26 @@ export function CardGame() {
     )
 }
 
+function LostGameMessage() {
+    return (
+        <ShowMessage {...{ message: "Oh no... You lose!!", image: "/pepe-cry.gif" }} />
+    )
+}
+
 function EndGameMessage() {
+    return (
+        <ShowMessage {...{ message: "Congratulations!!", image: "/clap-applause.gif" }} />
+    )
+}
+
+function ShowMessage({ message, image }) {
     return (
         <Row>
             <Col md={6}></Col>
             <Col md={6} style={{ textAlign: "center" }}>
                 <Space direction="vertical" size="large">
-                    <h2>Congratulations!!</h2>
-                    <img alt={"Clap gif"} src={process.env.PUBLIC_URL + "/clap-applause.gif"}></img>
+                    <h2>{message}</h2>
+                    <img style={{ width: "100%" }} alt={"Clap gif"} src={process.env.PUBLIC_URL + image}></img>
                     <br></br>
                     <Button onClick={() => window.location.reload()} type="primary" size="large" shape="round">Play again</Button>
                 </Space>

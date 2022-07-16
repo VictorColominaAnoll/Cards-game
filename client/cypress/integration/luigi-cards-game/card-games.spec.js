@@ -386,7 +386,7 @@ describe("Defining the moves the player can do", () => {
     })
 });
 
-describe("End game ;)", () => {
+describe("You win ;)", () => {
     it("should show a congrats message to the user after match cards", () => {
         mockCards([
             {
@@ -451,10 +451,61 @@ describe("End game ;)", () => {
         ]);
 
         cy.findByText("Play again").click()
-        
+
         cy.contains('Congratulations!!').should('not.exist')
         cy.contains('Play again').should('not.exist')
 
         selectCard("card-1", '⭐');
+    })
+})
+
+describe("You lose :_(", () => {
+    it("should show a sad message to the user when no possible movements left", () => {
+        mockCards([
+            {
+                id: 1,
+                content: "❤️",
+                show: true,
+                position: 1
+            },
+            {
+                id: 2,
+                content: "⭐",
+                show: true,
+                position: 2
+            },
+            {
+                id: 3,
+                content: "⭐",
+                show: true,
+                position: 3
+            },
+            {
+                id: 4,
+                content: "🐐",
+                show: true,
+                position: 4
+            },
+            {
+                id: 5,
+                content: "❤️",
+                show: true,
+                position: 5
+            },
+            {
+                id: 6,
+                content: "🐐",
+                show: true
+            },
+        ]);
+        cy.visit("/cards");
+
+        selectCard("card-2", '⭐');
+        selectCard("card-3", '⭐');
+
+
+        cy.contains('Oh no... You lose!!').should('exist')
+        cy.findByText("Play again").click()
+
     })
 })
