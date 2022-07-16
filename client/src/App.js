@@ -9,7 +9,6 @@ import {
   Route,
 } from "react-router-dom";
 import { Menu } from 'components/Menu';
-import { Home } from 'home/Home'
 import { Lobby } from 'lobby/Lobby';
 import { Game } from 'game/Game';
 import { CardGame } from 'cardGame/CardGame';
@@ -21,7 +20,6 @@ function App() {
       <Menu />
       <Routes>
         <Route path="/" element={<CardGame />} />
-        {/* <Route path="/" element={<Home />} /> */}
         <Route path="/lobby" element={<Lobby />} />
         <Route path="/game" element={<Game />} />
         <Route path="/cards" element={<CardGame />} />
