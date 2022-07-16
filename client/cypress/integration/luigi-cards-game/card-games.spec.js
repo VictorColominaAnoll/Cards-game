@@ -637,7 +637,7 @@ describe("You lose :_(", () => {
         cy.findByText("Play again").click()
     })
 
-    it.only("should show a sad message to the user when no right diagonal movements available", () => {
+    it("should show a sad message to the user when no right diagonal movements available", () => {
         mockCards([
             {
                 id: 1,
