@@ -1,6 +1,11 @@
-# Spriesof games
+# Card game
 
-https://spriesof-games.herokuapp.com
+## Do you want to play?
 
-## Perudo
-## Cards game
+Visit https://spriesof-games.herokuapp.com and play 🕹
+
+## Inspiration
+
+This game is based on the Super Mario 64 Luigi's minigame: Pair-a-Gone And On.
+
+
