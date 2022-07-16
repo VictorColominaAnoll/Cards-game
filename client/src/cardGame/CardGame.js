@@ -82,22 +82,30 @@ export function CardGame() {
     }
 
     const checkGameIsLost = (cardsWithUndefinedPositions) => {
-
         const cards = cardsWithUndefinedPositions.filter(card => { if (card.position !== undefined) return card })
 
         let isGameOver = true;
+        console.log(cards)
         for (let i = 0; i < cards.length - 1; i++) {
 
             const areCurrentCardAndNextOneEqual = cards[i].content === cards[i + 1].content;
 
-            if (areCurrentCardAndNextOneEqual)
+            if (areCurrentCardAndNextOneEqual || areVerticalCardsEqual(cards, i))
                 isGameOver = false;
 
         }
 
-        console.log(isGameOver)
-
         return isGameOver
+
+
+    }
+
+    function areVerticalCardsEqual(cards, i) {
+        try {
+            return cards[i].content === cards[i + 5].content;
+        } catch (error) {
+            return false;
+        }
     }
 
     const isThisCardActive = (id) => {
