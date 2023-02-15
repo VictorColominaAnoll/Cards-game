@@ -12,10 +12,6 @@ The project's main objectives were:
 - Test the front-end using [Cypress](https://www.cypress.io/) to learn more about this technology ✅
 - Use automatic releases with **Github Actions** to deploy new features ✅
 
-## Do you want to play? 🕹
-
-Visit https://spriesof-games.herokuapp.com and have fun 🥳
-
 # About the project
 
 ## Which technologies are used?
